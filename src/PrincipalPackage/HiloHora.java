@@ -15,16 +15,7 @@ public class HiloHora implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            Date hora = new Date();
-            DateFormat f = SimpleDateFormat("hh:mm:ss");
-            hora.setText(f.format(hora));
-            try {
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

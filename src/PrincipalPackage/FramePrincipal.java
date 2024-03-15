@@ -1,7 +1,11 @@
 package PrincipalPackage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FramePrincipal extends javax.swing.JFrame {
 
@@ -125,22 +129,35 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_subirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_subirArchivoActionPerformed
+        File fichero = null;
+        FileReader fr = null;
+        BufferedReader br = null;
         ta_unica.setText("");
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(
-                JFileChooser.DIRECTORIES_ONLY);
-        int seleccion = fileChooser.showOpenDialog(this);
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            File dir = fileChooser.getSelectedFile();
-            File[] files = dir.listFiles();
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    ta_unica.append("Directorio:" + file.getName() + "\n");
+        try {
+            JFileChooser jfc = new JFileChooser("./");
+            FileNameExtensionFilter filtro
+                    = new FileNameExtensionFilter("Archivos de Texto", "txt");
+            jfc.setFileFilter(filtro);
+            int seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                fichero = jfc.getSelectedFile();
+                fr = new FileReader(fichero);
+                br = new BufferedReader(fr);
+                String linea;
+                ta_unica.setText("");
+                while ((linea = br.readLine()) != null) {
+                    ta_unica.append(linea);
+                    ta_unica.append("\n");
                 }
-                if (file.isFile()) {
-                    ta_unica.append("Archivo:" + file.getName() + "\n");
-                }
-            }
+            } //fin if
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            br.close();
+            fr.close();
+        } catch (IOException ex) {
         }
     }//GEN-LAST:event_bt_subirArchivoActionPerformed
 

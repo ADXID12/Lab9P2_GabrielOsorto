@@ -33,6 +33,7 @@ public class Hilo extends Thread {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
         }
     }
