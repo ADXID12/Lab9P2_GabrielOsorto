@@ -5,17 +5,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JLabel;
 
-public class HiloHora implements Runnable {
-
-    private JLabel hora;
-
+public class HiloHora implements Runnable { 
+    private final JLabel hora;
     public HiloHora(JLabel hora) {
         this.hora = hora;
     }
-
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        while (true) {
+            Date h = new Date();
+            DateFormat f = new SimpleDateFormat("hh:mm:ss");
+            hora.setText(f.format(h));
+            try {
+                Thread.sleep(50);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

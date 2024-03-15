@@ -12,7 +12,10 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         initComponents();
         this.setResizable(false);
-        BarraProgreso= new Hilo(this.BarradeProgreso);
+        BarraProgreso = new Hilo(this.BarradeProgreso);
+        HiloHora h = new HiloHora(jl_horaactual);
+        Thread hiloHora = new Thread(h);
+        hiloHora.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -145,10 +148,12 @@ public class FramePrincipal extends javax.swing.JFrame {
                 br = new BufferedReader(fr);
                 String linea;
                 ta_unica.setText("");
-                while ((linea = br.readLine()) != null) {
-                    ta_unica.append(linea);
-                    ta_unica.append("\n");
+                try {
+                    BarraProgreso.start();
+                } catch (Exception e) {
+
                 }
+
             } //fin if
 
         } catch (Exception e) {
