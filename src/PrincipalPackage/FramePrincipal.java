@@ -15,7 +15,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         BarraProgreso = new Hilo(this.BarradeProgreso);
         HiloHora h = new HiloHora(jl_horaactual);
         Thread hiloHora = new Thread(h);
+        HiloFecha f= new HiloFecha(jl_fechaActual);
+        Thread hiloFecha= new Thread(f);
         hiloHora.start();
+        hiloFecha.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -27,6 +30,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jl_horaactual = new javax.swing.JLabel();
+        jl_fechaActual = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jl_BoroaCloud = new javax.swing.JLabel();
         bt_subirArchivo = new javax.swing.JButton();
         jl_SubiendoArchivo = new javax.swing.JLabel();
@@ -54,6 +59,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         jl_horaactual.setForeground(new java.awt.Color(255, 255, 255));
         jl_horaactual.setText("00:00:00");
 
+        jl_fechaActual.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jl_fechaActual.setForeground(new java.awt.Color(255, 255, 255));
+        jl_fechaActual.setText("dd/MM/yyyy");
+
+        jLabel3.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Hora actual:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -64,10 +77,10 @@ public class FramePrincipal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jl_horaactual))
-                    .addComponent(jLabel2))
+                    .addComponent(jl_horaactual)
+                    .addComponent(jl_fechaActual)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -78,8 +91,12 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jl_fechaActual)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jl_horaactual)
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 430));
@@ -204,11 +221,13 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JButton bt_subirArchivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jl_BoroaCloud;
     private javax.swing.JLabel jl_SubiendoArchivo;
+    private javax.swing.JLabel jl_fechaActual;
     private javax.swing.JLabel jl_horaactual;
     private javax.swing.JTextArea ta_unica;
     // End of variables declaration//GEN-END:variables

@@ -5,11 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JLabel;
 
-public class HiloHora implements Runnable { 
+public class HiloHora implements Runnable {
+
     private final JLabel hora;
+
     public HiloHora(JLabel hora) {
         this.hora = hora;
     }
+
     @Override
     public void run() {
         while (true) {
