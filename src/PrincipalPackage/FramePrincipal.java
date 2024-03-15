@@ -1,10 +1,13 @@
 package PrincipalPackage;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FramePrincipal extends javax.swing.JFrame {
@@ -12,11 +15,10 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         initComponents();
         this.setResizable(false);
-        BarraProgreso = new Hilo(this.BarradeProgreso);
         HiloHora h = new HiloHora(jl_horaactual);
         Thread hiloHora = new Thread(h);
-        HiloFecha f= new HiloFecha(jl_fechaActual);
-        Thread hiloFecha= new Thread(f);
+        HiloFecha f = new HiloFecha(jl_fechaActual);
+        Thread hiloFecha = new Thread(f);
         hiloHora.start();
         hiloFecha.start();
     }
@@ -132,6 +134,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         bt_Guardar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         bt_Guardar.setForeground(new java.awt.Color(255, 255, 255));
         bt_Guardar.setText("Guardar");
+        bt_Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_GuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(bt_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,13 +159,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         File fichero = null;
         FileReader fr = null;
         BufferedReader br = null;
+        String textoGuardado = "";
         ta_unica.setText("");
         try {
-            JFileChooser jfc = new JFileChooser("./");
+            jfc = new JFileChooser("./");
             FileNameExtensionFilter filtro
                     = new FileNameExtensionFilter("Archivos de Texto", "txt");
             jfc.setFileFilter(filtro);
-            int seleccion = jfc.showOpenDialog(this);
+            seleccion = jfc.showOpenDialog(this);
             if (seleccion == JFileChooser.APPROVE_OPTION) {
                 fichero = jfc.getSelectedFile();
                 fr = new FileReader(fichero);
@@ -166,9 +174,14 @@ public class FramePrincipal extends javax.swing.JFrame {
                 String linea;
                 ta_unica.setText("");
                 try {
+                    while ((linea = br.readLine()) != null) {
+                        textoGuardado += linea;
+                        textoGuardado += "\n";
+                    }
+                    BarraProgreso = new Hilo(this.BarradeProgreso, ta_unica, textoGuardado);
                     BarraProgreso.start();
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
 
             } //fin if
@@ -182,6 +195,40 @@ public class FramePrincipal extends javax.swing.JFrame {
         } catch (IOException ex) {
         }
     }//GEN-LAST:event_bt_subirArchivoActionPerformed
+
+    private void bt_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_GuardarActionPerformed
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            try {
+
+                File fichero = null;
+                if (jfc.getFileFilter().getDescription().equals(
+                        "Archivos de Texto")) {
+                    fichero
+                            = new File(jfc.getSelectedFile().getPath() + ".txt");
+                } else {
+                    fichero = jfc.getSelectedFile();
+                }
+                fw = new FileWriter(fichero);
+                bw = new BufferedWriter(fw);
+                bw.write(ta_unica.getText());
+                ta_unica.setText("");
+                bw.flush();
+                JOptionPane.showMessageDialog(this,
+                        "Archivo guardado exitosamente");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                bw.close();
+                fw.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }//fin IF
+    }//GEN-LAST:event_bt_GuardarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -232,4 +279,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JTextArea ta_unica;
     // End of variables declaration//GEN-END:variables
     Hilo BarraProgreso;
+    int seleccion;
+    JFileChooser jfc;
+
 }
