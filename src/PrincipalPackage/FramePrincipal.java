@@ -1,5 +1,8 @@
 package PrincipalPackage;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+
 public class FramePrincipal extends javax.swing.JFrame {
 
     public FramePrincipal() {
@@ -20,14 +23,15 @@ public class FramePrincipal extends javax.swing.JFrame {
         jl_SubiendoArchivo = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        ta_unica = new javax.swing.JTextArea();
+        bt_Guardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 0));
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -66,19 +70,33 @@ public class FramePrincipal extends javax.swing.JFrame {
         jl_BoroaCloud.setText("Boroa Cloud");
         jPanel1.add(jl_BoroaCloud, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
 
+        bt_subirArchivo.setBackground(new java.awt.Color(204, 204, 0));
+        bt_subirArchivo.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        bt_subirArchivo.setForeground(new java.awt.Color(255, 255, 255));
         bt_subirArchivo.setText("Subir");
-        jPanel1.add(bt_subirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
+        bt_subirArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_subirArchivoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_subirArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
         jl_SubiendoArchivo.setForeground(new java.awt.Color(0, 0, 0));
         jl_SubiendoArchivo.setText("SubiendoArchivo");
-        jPanel1.add(jl_SubiendoArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, -1, -1));
-        jPanel1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 280, 20));
+        jPanel1.add(jl_SubiendoArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
+        jPanel1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 280, 20));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        ta_unica.setColumns(20);
+        ta_unica.setRows(5);
+        jScrollPane1.setViewportView(ta_unica);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 420, 240));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 420, 220));
+
+        bt_Guardar.setBackground(new java.awt.Color(204, 204, 0));
+        bt_Guardar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        bt_Guardar.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Guardar.setText("Guardar");
+        jPanel1.add(bt_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,6 +111,26 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bt_subirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_subirArchivoActionPerformed
+        ta_unica.setText("");
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(
+                JFileChooser.DIRECTORIES_ONLY);
+        int seleccion = fileChooser.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File dir = fileChooser.getSelectedFile();
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    ta_unica.append("Directorio:" + file.getName() + "\n");
+                }
+                if (file.isFile()) {
+                    ta_unica.append("Archivo:" + file.getName() + "\n");
+                }
+            }
+        }
+    }//GEN-LAST:event_bt_subirArchivoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -127,6 +165,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_Guardar;
     private javax.swing.JButton bt_subirArchivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -134,8 +173,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel jl_BoroaCloud;
     private javax.swing.JLabel jl_SubiendoArchivo;
+    private javax.swing.JTextArea ta_unica;
     // End of variables declaration//GEN-END:variables
 }
